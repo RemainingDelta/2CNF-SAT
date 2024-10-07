@@ -29,13 +29,6 @@ assignments_list = [0] * 2 * m
 # a and b are the two values from each line of the input file
 # if a = b, then automatically set permanent true and permenent false values, but still add to edges_list
 def edges(a,b):
-    if (a == b):
-        if (a > 0):
-            assignments_list[2*a-2] = 1
-            assignments_list[2*a-1] = -1
-        else:
-            assignments_list[2*abs(a)-2] = -1
-            assignments_list[2*abs(a)-1] = 1
     if (a > 0):
         edges_list[2*a-1].append(b)
     else: 
@@ -71,14 +64,13 @@ def check_assignments(current_assignment, original_assignment):
         if (assignments_list[positive_index] == 0):
             assignments_list[positive_index] = 2
             assignments_list[2 * current_assignment - 1] = -2
-            if len(edges_list[positive_index]) > 0:
-                for i in range (len(edges_list[positive_index])):                  
-                    # if the edge equals the original_assignment then skip check_assignment for this edge (it will keep looping)
-                    if (edges_list[positive_index][i] == original_assignment):
-                        continue
-                    check_assignments(edges_list[positive_index][i], original_assignment)
+            for i in range (len(edges_list[positive_index])):                  
+                # if the edge equals the original_assignment then skip check_assignment for this edge (it will keep looping)
+                if (edges_list[positive_index][i] == original_assignment):
+                    continue
+                check_assignments(edges_list[positive_index][i], original_assignment)
         # if the assignment at positive_index is -2 or -1, then this is a contradiction
-        elif ((assignments_list[positive_index] == -2) or (assignments_list[positive_index] == -1)):
+        elif ((assignments_list[positive_index] == -2)):
             # if the original_assignment is greater than 0 (hasn't been reset yet), then quick_reset() and check_assignments for - original assignment
             if (original_assignment > 0):    
                 quick_reset()
@@ -100,15 +92,13 @@ def check_assignments(current_assignment, original_assignment):
         if (assignments_list[negative_index] == 0):
             assignments_list[negative_index] = 2
             assignments_list[2 * abs(current_assignment) - 2] = -2
-            length = len(edges_list[negative_index])
-            if length > 0:
-                for i in range (length):
-                    # if the edge equals the original_assignment then skip check_assignment for this edge (it will keep looping)
-                    if (edges_list[negative_index][i] == original_assignment):
-                        continue
-                    check_assignments(edges_list[negative_index][i], original_assignment)
+            for i in range (len(edges_list[negative_index])):
+                # if the edge equals the original_assignment then skip check_assignment for this edge (it will keep looping)
+                if (edges_list[negative_index][i] == original_assignment):
+                    continue
+                check_assignments(edges_list[negative_index][i], original_assignment)
         # if the assignment at negative_index is -2 or -1, then this is a contradiction
-        elif ((assignments_list[negative_index] == -2) or (assignments_list[negative_index] == -1)):
+        elif ((assignments_list[negative_index] == -2)):
             # if the original_assignment is greater than 0 (hasn't been reset yet), then quick_reset() and check_assignments for - original assignment
             if (original_assignment > 0):    
                 quick_reset()
