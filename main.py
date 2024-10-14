@@ -1,5 +1,5 @@
 # read text file and put all values into a list with each line as its own list
-file_in = open('test0.txt', 'r').read()
+file_in = open('test8.txt', 'r').read()
 split_file = file_in.split('\n')
 CNF_formula_list = [list(map(int, line.split(' '))) for line in split_file]
 
@@ -102,8 +102,7 @@ def check_assignments(current_assignment, original_assignment):
             # if the original_assignment is greater than 0 (hasn't been reset yet), then quick_reset() and check_assignments for - original assignment
             if (original_assignment > 0):    
                 quick_reset()
-                next_check = - original_assignment 
-                check_assignments(next_check, next_check)
+                check_assignments(- original_assignment, - original_assignment)
             # if the original_assigment is less than 0 (already has been reset once), then print "FALSE" and exit program
             else:    
                 print("FALSE")
